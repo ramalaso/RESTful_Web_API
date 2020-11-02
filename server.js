@@ -1,25 +1,14 @@
-const { server } = require('./config');
-const registerMiddlewares = require('./middleswares');
+// const { server } = require('./config');//Common JS modules
+import { server } from './config';
+
+// const registerMiddlewares = require('./middleswares');
+import { rootRouter } from './routes';
+
+import registerMiddlewares from './middleswares';
 
 async function main() {
     registerMiddlewares(server);
-
-    server.get('/', (req, res, next) => {
-        res.json({ message: `Handling ${req.method} request.` });
-    });
-
-    server.post('/', (req, res, next) => {
-        res.json({ message: `Handling ${req.method} request.` });
-    });
-
-    server.put('/', (req, res, next) => {
-        res.json({ message: `Handling ${req.method} request.` });
-    });
-
-    server.delete('/', (req, res, next) => {
-        res.json({ message: `Handling ${req.method} request.` });
-    });
-
+    server.use('/v1', rootRouter);
     server.listen();
 }
 
